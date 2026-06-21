@@ -1,0 +1,32 @@
+# Table of contents for "Build a Small Language Model From Scratch".
+#
+# Lessons are listed IN COURSE ORDER: the standalone tokenizer warm-up (S1)
+# first, then Modules 0 through 10. Each entry points at a per-lesson markdown
+# page under book/lessons/ that either embeds the live JupyterLite notebook
+# (browser lessons) or links out to Google Colab (PyTorch lessons).
+#
+# Format docs: https://jupyterbook.org/customize/toc.html
+format: jb-book
+root: intro
+
+parts:
+  - caption: Warm-up
+    chapters:
+      - file: lessons/s1_tokenizer_warmup
+  - caption: Build it by hand (runs in your browser)
+    chapters:
+      - file: lessons/m00_orientation
+      - file: lessons/m01_numpy
+      - file: lessons/m02_neuron
+      - file: lessons/m03_autograd
+      - file: lessons/m04_bigram
+      - file: lessons/m05_mlp_lm
+      - file: lessons/m06_attention
+  - caption: Assemble & train the GPT (free on Colab)
+    chapters:
+      - file: lessons/m07_gpt
+      - file: lessons/m08_train
+      - file: lessons/m09_capstone
+  - caption: Where to go next
+    chapters:
+      - file: lessons/m10_whats_next

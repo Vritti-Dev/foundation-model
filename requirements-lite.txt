@@ -1,0 +1,27 @@
+# In-browser (JupyterLite / Pyodide) kernel dependencies.
+#
+# These are the packages the *reader's browser* needs to run the Module 0-6
+# notebooks live on the course site. They are installed inside Pyodide at
+# notebook runtime via `piplite.install(...)` / `%pip install`, NOT into the
+# build environment. (The site build itself uses requirements.txt + the
+# jupyter-book/jupyterlite-sphinx toolchain.)
+#
+# Pyodide ships its own NumPy build, so numpy is pulled from the Pyodide
+# distribution rather than PyPI; it is listed here for completeness and to pin
+# the major version the lessons were authored against.
+numpy>=2.0
+
+# The course's reference solutions and the client-side grader must be importable
+# in the browser. They are pure-Python (NO torch import at module load for the
+# M0-M6 / S1 lessons), so they ship to JupyterLite as a wheel built from this
+# repo's `reference/` and `grader/` packages and installed in-browser via
+# piplite. Build the wheel with `python -m build` (or `pip wheel .`) and place it
+# on the JupyterLite contents/pypi path so `piplite.install("slm-course")`
+# resolves it offline. The package name matches pyproject.toml: slm-course.
+slm-course
+
+# Optional structured grader (Tier 2). otter-grader runs client-side under
+# JupyterLite when its install succeeds; if it fails under the pinned Pyodide
+# version, the lessons fall back to plain in-notebook `assert` checks (Tier 1),
+# which always work. Pin/relax as validated against the shipped Pyodide build.
+# otter-grader>=6.0
