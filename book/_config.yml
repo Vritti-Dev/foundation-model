@@ -1,45 +1,29 @@
 # Jupyter Book configuration for "Build a Small Language Model From Scratch".
 #
-# This site renders the curriculum as a static, zero-backend website. Browser
-# lessons (the warm-up + Modules 0-6) embed live JupyterLite notebooks that run
-# entirely in the reader's browser on the Pyodide (WASM) Python kernel via the
-# `jupyterlite-sphinx` extension. The PyTorch lessons (Modules 7-9) link out to
-# Google Colab instead, since PyTorch has no in-browser wheel.
+# Browser lessons (warm-up + Modules 0-6) embed JupyterLite notebooks that run
+# on the Pyodide WASM kernel via the `jupyterlite-sphinx` extension. PyTorch
+# lessons (Modules 7-9) link to Google Colab.
 #
 # Docs: https://jupyterbook.org/customize/config.html
 
-title: Build a Small Language Model From Scratch
-author: The SLM Course
+title: Build an SLM From Scratch
+author: ""
 logo: ""
-copyright: "2026"
+copyright: ""
 
-# Don't fail the whole build on a single missing cross-reference or a notebook
-# that we intentionally do not execute at build time (browser notebooks execute
-# in the reader's browser, not here).
 only_build_toc_files: true
 
-#######################################################################################
-# Execution: do NOT execute notebooks during the Sphinx build.
-#
-# Browser lessons are meant to run in JupyterLite/Pyodide in the reader's browser,
-# and the Colab lessons import torch (unavailable in the build env). Executing them
-# here would be wrong and/or fail, so we ship them as-authored.
 execute:
   execute_notebooks: "off"
 
-#######################################################################################
-# HTML-specific settings
 html:
   home_page_in_navbar: true
   use_repository_button: true
   use_issues_button: false
   use_edit_page_button: false
   baseurl: ""
+  extra_footer: ""
 
-#######################################################################################
-# Launch button settings — these power the "Open in Colab" buttons that the
-# PyTorch lesson pages rely on. Point these at the public GitHub repo that hosts
-# the notebooks. Update `url`/`repository.url` to the real repo before deploying.
 launch_buttons:
   notebook_interface: "jupyterlab"
   colab_url: "https://colab.research.google.com"
@@ -49,8 +33,6 @@ repository:
   path_to_book: book
   branch: main
 
-#######################################################################################
-# Parse / MyST settings
 parse:
   myst_enable_extensions:
     - colon_fence
@@ -59,18 +41,10 @@ parse:
     - linkify
     - substitution
 
-#######################################################################################
-# Sphinx — enable jupyterlite-sphinx (live in-browser notebooks) and wire in the
-# client-side gating script that lives in book/_static/gating.js (added by the
-# client-gating track). `jupyterlite_sphinx` builds a JupyterLite deployment from
-# the notebooks under `notebooks/` and serves it at the `lite/` path; the
-# `{jupyterlite}` / `{retrolite}` directives embed a live kernel into a page.
 sphinx:
   extra_extensions:
     - jupyterlite_sphinx
   config:
-    # Ship the in-browser lessons into the JupyterLite deployment. Paths are
-    # relative to this config file (book/).
     jupyterlite_dir: "."
     jupyterlite_contents:
       - "../notebooks/s1_tokenizer_warmup.ipynb"
@@ -81,18 +55,21 @@ sphinx:
       - "../notebooks/m04_bigram.ipynb"
       - "../notebooks/m05_mlp_lm.ipynb"
       - "../notebooks/m06_attention.ipynb"
-    # Bundle the reader-facing requirements so Pyodide can `piplite.install`
-    # numpy + the grader/reference wheels in-browser.
     jupyterlite_silence: false
-    # Pull in the client-side gating script (IndexedDB progress flags, progress
-    # token download, Pyodide load-failure fallback, timeout watchdog). The file
-    # is provided by the gating track; we only reference it here.
     html_js_files:
       - gating.js
-  # Static asset directory (also where gating.js and the M0 demo weights live).
-  local_extensions: {}
+    html_css_files:
+      - custom.css
+    html_theme_options:
+      default_mode: "dark"
+      home_page_in_toc: false
+      show_navbar_depth: 1
+      show_toc_level: 1
+      use_download_button: false
+      use_fullscreen_button: false
+      logo:
+        text: "SLM Course"
 
-# Files/dirs that are NOT part of the rendered book.
 exclude_patterns:
   - _build
   - "**.ipynb_checkpoints"
