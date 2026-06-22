@@ -642,3 +642,167 @@ p { margin: 0 0 1rem; }
   .reveal-on-scroll { opacity: 1 !important; transform: none !important; }
 }
 
+/* ============================================================
+   Mobile + tablet responsiveness. Single block at the end so it
+   overrides everything above.
+   ============================================================ */
+
+/* Tablet (~ <= 900px) */
+@media (max-width: 900px) {
+  /* Nav: keep only the brand, the primary action, and Sign in.
+     Hide every <a> that points at a hash anchor or the /course mount,
+     and the inline logout form. */
+  .nav { padding: 12px 16px; }
+  .nav-links a:not(.btn-primary):not(.btn-ghost),
+  .nav-links a.btn-ghost[href="/dashboard"],
+  .nav-links form.inline { display: none; }
+  .nav-links a[href="/login"].btn-ghost { display: inline-flex; }
+  .nav-links { gap: 8px; }
+  .brand-name { font-size: 14px; }
+  .btn-primary, .btn-ghost { padding: 7px 12px; font-size: 13px; }
+
+  /* Hero tighter */
+  .hero { padding: 90px 20px 100px; min-height: clamp(560px, 80vh, 800px); }
+  .hero-title { font-size: clamp(38px, 7.2vw, 64px); }
+  .hero-sub { font-size: 16px; max-width: 540px; }
+  .hero-cta { gap: 10px; }
+  .btn-lg { padding: 13px 18px; font-size: 14.5px; }
+
+  /* Footer stacks */
+  .footer-inner { flex-direction: column; gap: 14px; }
+}
+
+/* Mobile (~ <= 640px) */
+@media (max-width: 640px) {
+  /* Nav: brand + one CTA only. */
+  .nav { padding: 10px 12px; gap: 8px; }
+  .nav-links a[href="/login"].btn-ghost,
+  .nav-links a.btn-ghost { display: none !important; }
+  .nav-links { gap: 6px; flex-shrink: 0; }
+  .nav-links .btn-primary { padding: 7px 12px; font-size: 12.5px; white-space: nowrap; }
+  .brand { gap: 8px; min-width: 0; overflow: hidden; }
+  .brand-name { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand-mark { font-size: 15px; flex-shrink: 0; }
+
+  html, body { overflow-x: hidden; max-width: 100vw; width: 100%; }
+  .nav { width: 100%; box-sizing: border-box; overflow: hidden; }
+  .nav-links { max-width: 50%; }
+  .band { padding: 56px 18px; }
+  .hero { padding: 80px 20px 90px; min-height: clamp(540px, 78vh, 720px); }
+  .demo-strip { padding: 56px 18px; }
+  .learn-hero { padding: 60px 18px 48px; }
+  .learn-howitworks { padding: 48px 18px; }
+  .learn-phases { padding: 56px 18px; }
+
+  /* Hero */
+  .hero-inner { padding: 0 6px; }
+  .kicker { font-size: 10px; padding: 5px 10px; letter-spacing: 0.05em; margin-bottom: 22px; }
+  .hero-title { font-size: clamp(26px, 7.2vw, 36px); letter-spacing: -0.025em; line-height: 1.06; word-wrap: break-word; }
+  .hero-title .line { white-space: normal; }
+  .hero-inner { overflow-wrap: anywhere; }
+  .hero-sub { font-size: 14.5px; line-height: 1.55; margin: 0 auto 22px; padding: 0 6px; max-width: 320px; }
+  .hero-cta { flex-direction: column; align-items: stretch; gap: 10px; }
+  .hero-cta .btn-primary, .hero-cta .btn-secondary { width: 100%; }
+  .btn-lg { padding: 14px 18px; }
+
+  /* Hero meta: ditch the inline dot list; compact 2x2 pill grid. */
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    font-size: 11.5px;
+    max-width: 300px;
+    margin: 0 auto;
+    line-height: 1.3;
+  }
+  .hero-meta > span:not(.dot) {
+    padding: 7px 8px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--bg-2);
+    text-align: center;
+    color: var(--fg-2);
+  }
+  .hero-meta .dot { display: none; }
+  .hero-meta b { display: block; color: var(--saffron); font-size: 13.5px; font-weight: 700; margin-bottom: 1px; }
+
+  .hero-scroll-cue { bottom: 16px; font-size: 10px; letter-spacing: 0.14em; }
+  .cue-line { height: 22px; }
+
+  /* Section titles */
+  .band-title { font-size: clamp(24px, 6.4vw, 32px); line-height: 1.18; }
+  .lede { font-size: 15px; }
+
+  /* Demo strip */
+  .demo-grid { gap: 22px; }
+  .demo-title { font-size: 22px; }
+  .demo-sub { font-size: 14px; }
+  .demo-pre { font-size: 12.5px; min-height: 140px; }
+  .demo-output { padding: 18px 16px; }
+
+  /* Two-col blocks */
+  .two-col { grid-template-columns: 1fr; gap: 26px; }
+  .two-col .col h3 { font-size: 21px; }
+
+  /* Fork cards */
+  .fork { gap: 14px; }
+  .card { padding: 22px; }
+  .card-title { font-size: 18px; }
+  .card-list li { padding: 7px 0 7px 20px; font-size: 14.5px; }
+  .closer { font-size: 16px; }
+
+  /* Mission stats */
+  .mission-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .stat { padding: 18px 14px; }
+  .stat-num { font-size: 32px; }
+  .stat-label { font-size: 12.5px; }
+
+  /* Curriculum */
+  .phase-grid { grid-template-columns: 1fr; gap: 10px; }
+  .lcard { padding: 16px 18px; }
+  .lcard-title { font-size: 15px; }
+  .lcard-summary { font-size: 13px; }
+  .phase { margin-top: 28px; }
+  .phase-label { font-size: 17px; }
+
+  /* How it works */
+  .band-how .how-grid { grid-template-columns: 1fr; gap: 14px; }
+  .band-how .how-item { padding: 22px; }
+  .band-how .how-item h3 { font-size: 17px; }
+
+  /* Final CTA card */
+  .cta-card { padding: 36px 24px; border-radius: 16px; }
+  .cta-inner .hero-cta { flex-direction: column; align-items: stretch; }
+  .cta-inner .hero-cta .btn-primary, .cta-inner .hero-cta .btn-secondary { width: 100%; }
+
+  /* Auth pages */
+  .auth-shell { padding: 56px 18px; }
+  .auth-card { padding: 28px 22px; }
+  .auth-title { font-size: 24px; }
+
+  /* Dashboard */
+  .dash-shell { padding: 36px 18px; }
+  .dash-head { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .ring { width: 100%; min-width: 0; }
+  .dash-grid { grid-template-columns: 1fr; }
+
+  /* Scroll progress: thicker on small screens */
+  .scroll-progress { height: 3px; }
+}
+
+/* Very small (~ <= 380px) */
+@media (max-width: 380px) {
+  .hero-title { font-size: 30px; }
+  .band-title { font-size: 22px; }
+  .stat-num { font-size: 28px; }
+  .lcard-summary { font-size: 12.5px; }
+  .demo-pre { font-size: 11.5px; min-height: 120px; }
+}
+
+/* Disable hover effects on touch */
+@media (hover: none) {
+  .lcard:hover { transform: none; background: var(--bg-2); }
+  .band-how .how-item:hover { transform: none; }
+  .btn-glow::after { animation: none; opacity: 0; }
+}
+
