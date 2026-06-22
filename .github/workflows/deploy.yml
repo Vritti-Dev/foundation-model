@@ -57,6 +57,10 @@ jobs:
           # Normalize backslash separators in launcher URLs. No-op on Linux
           # (only fires for Windows-built sites), but cheap and idempotent.
           python book/fix_lite_paths.py
+          # Wire the pyodide-kernel labextension into the lite build. The
+          # jupyter-lite addon does not always discover it from the share/
+          # path. Idempotent.
+          python book/wire_pyodide_kernel.py
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

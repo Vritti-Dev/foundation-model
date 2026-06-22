@@ -5,7 +5,8 @@ This project uses **Jupyter Book 1.x (the Sphinx-based engine)**. The pinned lin
 ```bash
 pip install "jupyter-book==1.0.4.post1" jupyterlite-sphinx jupyterlite-pyodide-kernel
 jupyter-book build book/
-python book/fix_lite_paths.py   # Windows only; no-op elsewhere
+python book/fix_lite_paths.py        # Windows only; no-op elsewhere
+python book/wire_pyodide_kernel.py   # always run: registers the in-browser kernel
 ```
 
 The output lands in `book/_build/html/`. Serve it locally with:
