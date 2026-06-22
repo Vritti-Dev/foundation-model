@@ -160,5 +160,40 @@ footer.prev-next-footer { margin-top: 1.2rem; }
   font-size: 0.95rem;
 }
 
-/* ---------- Content max width ---------- */
-.bd-main .bd-article-container { max-width: 880px; }
+/* ---------- Content width and centering ----------
+   On wide displays, sphinx-book-theme leaves the article column hugging the
+   left sidebar with a vast empty area to its right. The right secondary
+   sidebar (page TOC) is also empty for these short lessons. Fix both:
+   constrain the article column to a comfortable reading width and center it
+   in the available space; hide the empty right TOC. */
+
+/* Wider total page width so the centered column has room to breathe. */
+.bd-page-width,
+.bd-container__inner { max-width: 1400px; margin-left: auto; margin-right: auto; }
+
+/* The article column itself: cap at a calm reading width, center horizontally
+   inside the main area (so it sits between the left sidebar and the right
+   edge, not pinned to the left). */
+.bd-main .bd-article-container,
+.bd-main .bd-article {
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Hide the right TOC sidebar entirely. On lesson pages it is empty and on
+   the landing it duplicates the left-sidebar TOC; either way it leaves an
+   unwelcome blank column on wide displays. */
+.bd-sidebar-secondary,
+.bd-sidebar-secondary.bd-toc { display: none !important; }
+.bd-main { margin-right: 0 !important; }
+
+/* When the left sidebar is collapsed via the hamburger, the article column
+   was pinning to the far left and leaving the entire viewport's worth of
+   empty space on the right. Force centering at every layout level. */
+.bd-article,
+.bd-article-container,
+article[role="main"] {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
