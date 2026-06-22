@@ -845,6 +845,50 @@ def nb_m06_attention():
 # ---------------------------------------------------------------------------
 
 
+# Curated links section appended to every Colab notebook so learners who land
+# straight in Colab (and never see the full lesson page) get the key references.
+GOING_DEEPER_M7 = (
+    "## Going deeper\n"
+    "\n"
+    "* Karpathy, **nanoGPT** (the reference codebase): "
+    "<https://github.com/karpathy/nanoGPT>\n"
+    "* Karpathy, **Let's build GPT from scratch** (Zero to Hero #4): "
+    "<https://www.youtube.com/watch?v=kCc8FmEb1nY>\n"
+    "* Vaswani et al., **Attention Is All You Need** (the transformer paper, 8 pages): "
+    "<https://arxiv.org/abs/1706.03762>\n"
+    "* Jay Alammar, **The Illustrated Transformer**: "
+    "<https://jalammar.github.io/illustrated-transformer/>\n"
+    "* Radford et al., **GPT-1 paper** (very readable): "
+    "<https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf>\n"
+)
+
+GOING_DEEPER_M8 = (
+    "## Going deeper\n"
+    "\n"
+    "* Karpathy, **Let's build GPT from scratch** (training loop walk-through): "
+    "<https://www.youtube.com/watch?v=kCc8FmEb1nY>\n"
+    "* Hoffmann et al., **Chinchilla scaling laws** (how to size models vs data): "
+    "<https://arxiv.org/abs/2203.15556>\n"
+    "* Loshchilov and Hutter, **Decoupled Weight Decay Regularization** (why AdamW): "
+    "<https://arxiv.org/abs/1711.05101>\n"
+    "* Karpathy, **Let's reproduce GPT-2** (4-hour build): "
+    "<https://www.youtube.com/watch?v=l8pRSuU81PU>\n"
+)
+
+GOING_DEEPER_M9 = (
+    "## Going deeper\n"
+    "\n"
+    "* **Project Gutenberg**, public-domain text corpora to train on: "
+    "<https://www.gutenberg.org/>\n"
+    "* Karpathy, **Software 2.0**: "
+    "<https://karpathy.medium.com/software-2-0-a64152b37c35>\n"
+    "* Hugging Face, **PEFT** (fine-tune a real LLM cheaply): "
+    "<https://huggingface.co/docs/peft>\n"
+    "* Ouyang et al., **InstructGPT** (how chatbots are made from base models): "
+    "<https://arxiv.org/abs/2203.02155>\n"
+)
+
+
 def nb_m07_gpt():
     nb = new_notebook()
     nb.cells.append(new_markdown_cell(
@@ -931,6 +975,7 @@ def nb_m07_gpt():
         "res = train(config='cpu', max_iters=50, seed=1337, data=data)\n"
         "print(make_submission_token(res, 'M7'))\n"
     ))
+    nb.cells.append(new_markdown_cell(GOING_DEEPER_M7))
     return nb
 
 
@@ -1006,6 +1051,7 @@ def nb_m08_train():
     nb.cells.append(new_code_cell(
         "print(make_submission_token(res, 'M8'))\n"
     ))
+    nb.cells.append(new_markdown_cell(GOING_DEEPER_M8))
     return nb
 
 
@@ -1089,6 +1135,7 @@ def nb_m09_capstone():
     nb.cells.append(new_code_cell(
         "print(make_submission_token(res, 'M9'))\n"
     ))
+    nb.cells.append(new_markdown_cell(GOING_DEEPER_M9))
     return nb
 
 
