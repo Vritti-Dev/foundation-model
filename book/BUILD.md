@@ -14,6 +14,22 @@ The output lands in `book/_build/html/`. Serve it locally with:
 python -m http.server 8123 --directory book/_build/html
 ```
 
+## Pyodide kernel must be configured
+
+`jupyterlite-pyodide-kernel` ships *without* the Pyodide runtime bundled (Pyodide is ~150 MB and is downloaded at build time). Without a `pyodide_url` set, the build silently produces a `lite/` deployment with **no kernel**, and the "Launch in your browser" button opens JupyterLite with only a "No Kernel" option.
+
+`book/jupyter_lite_config.json` pins the URL to the Pyodide release that matches the installed kernel version:
+
+```json
+{
+  "PyodideAddon": {
+    "pyodide_url": "https://github.com/pyodide/pyodide/releases/download/0.29.3/pyodide-0.29.3.tar.bz2"
+  }
+}
+```
+
+The first build downloads and extracts the tarball, after which `book/_build/html/lite/static/pyodide/` contains the runtime and the lite app boots a real Python kernel. Subsequent builds reuse the cache. If you bump `jupyterlite-pyodide-kernel`, update the URL to the matching Pyodide version (see `jupyterlite_pyodide_kernel.constants.PYODIDE_VERSION`).
+
 ## Windows: backslash in launcher URLs
 
 On Windows, `jupyterlite-sphinx` emits the "Launch in your browser" / "Open as a notebook" button with a backslash separator (e.g. `..\lite/lab/...`). Browsers do not normalize backslashes in HTTP URLs, so the button 404s when served over `http://` (it works only on `file://`). The `book/fix_lite_paths.py` script walks the built HTML and rewrites those to forward slashes. Always run it after `jupyter-book build` on Windows. The CI workflow runs it too; on Linux it does nothing.
