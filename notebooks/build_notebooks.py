@@ -46,22 +46,32 @@ COLAB_URL = (
     f"{COURSE_GITHUB_REPO}/blob/main/notebooks/"
 )
 
-# Bootstrap cell prepended to every Colab notebook so `from reference.gpt...`
-# resolves. On Colab the cell clones the course repo and cds into it; locally
-# (and during the headless verifier) the `import google.colab` fails so this is
-# a no-op and the existing cwd-on-sys.path covers imports.
+# Bootstrap snippet prepended to every code cell in the Colab notebooks so
+# `from reference.*` works regardless of which cell you run first. It clones
+# the course repo on Colab (idempotent), then ensures the path is on sys.path.
+# Locally (and in the headless verifier) `import google.colab` fails and the
+# whole thing is a no-op; imports resolve from the existing cwd.
+#
+# NOTE: We rely on sys.path, NOT cwd. IPython only inserts cwd into sys.path
+# at kernel startup; %cd does NOT update sys.path, so subsequent cells would
+# still fail to find `reference/` after a %cd. We insert the absolute path
+# explicitly, which survives kernel restarts and reordered cell execution.
 COLAB_BOOTSTRAP = (
-    "# Bootstrap: make the course code importable.\n"
-    "# On Colab this clones the repo and cds into it; locally it is a no-op.\n"
+    "# Bootstrap (run me first / safe to re-run): clone the course repo on\n"
+    "# Colab and put it on sys.path so `from reference...` and `from grader...`\n"
+    "# work in every cell below. No-op when running locally.\n"
     "import os, sys\n"
     "try:\n"
     "    import google.colab  # noqa: F401\n"
-    f"    if not os.path.exists('{COURSE_GITHUB_REPO}'):\n"
-    f"        !git clone -q {COURSE_REPO_URL}\n"
-    f"    %cd {COURSE_GITHUB_REPO}\n"
-    "    print('repo ready at', os.getcwd())\n"
+    f"    _repo_dir = '/content/{COURSE_GITHUB_REPO}'\n"
+    "    if not os.path.exists(_repo_dir):\n"
+    f"        !git clone -q {COURSE_REPO_URL} {{_repo_dir}}\n"
+    "    if _repo_dir not in sys.path:\n"
+    "        sys.path.insert(0, _repo_dir)\n"
+    "    os.chdir(_repo_dir)\n"
+    "    print('course repo ready:', _repo_dir)\n"
     "except ImportError:\n"
-    "    pass  # running locally; assume cwd is the repo root\n"
+    "    pass  # local: cwd already on sys.path\n"
 )
 
 
