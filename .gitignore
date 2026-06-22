@@ -12,3 +12,4 @@ book/.jupyterlite.doit.db
 # Secrets — never commit.
 .env
 web/.env
+dist/
