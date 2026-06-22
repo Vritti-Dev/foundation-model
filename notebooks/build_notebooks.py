@@ -38,7 +38,31 @@ PATH_BOOTSTRAP = (
     "    sys.path.insert(0, _root)\n"
 )
 
-COLAB_URL = "https://colab.research.google.com/github/OWNER/REPO/blob/main/notebooks/"
+COURSE_GITHUB_OWNER = "Vritti-Dev"
+COURSE_GITHUB_REPO = "foundation-model"
+COURSE_REPO_URL = f"https://github.com/{COURSE_GITHUB_OWNER}/{COURSE_GITHUB_REPO}.git"
+COLAB_URL = (
+    f"https://colab.research.google.com/github/{COURSE_GITHUB_OWNER}/"
+    f"{COURSE_GITHUB_REPO}/blob/main/notebooks/"
+)
+
+# Bootstrap cell prepended to every Colab notebook so `from reference.gpt...`
+# resolves. On Colab the cell clones the course repo and cds into it; locally
+# (and during the headless verifier) the `import google.colab` fails so this is
+# a no-op and the existing cwd-on-sys.path covers imports.
+COLAB_BOOTSTRAP = (
+    "# Bootstrap: make the course code importable.\n"
+    "# On Colab this clones the repo and cds into it; locally it is a no-op.\n"
+    "import os, sys\n"
+    "try:\n"
+    "    import google.colab  # noqa: F401\n"
+    f"    if not os.path.exists('{COURSE_GITHUB_REPO}'):\n"
+    f"        !git clone -q {COURSE_REPO_URL}\n"
+    f"    %cd {COURSE_GITHUB_REPO}\n"
+    "    print('repo ready at', os.getcwd())\n"
+    "except ImportError:\n"
+    "    pass  # running locally; assume cwd is the repo root\n"
+)
 
 
 def read_ref(rel_path):
@@ -838,10 +862,7 @@ def nb_m07_gpt():
         "parameter model that runs fine even without a GPU."
     ))
     nb.cells.append(new_code_cell(
-        "# If running on Colab, get the course code onto the machine. Uncomment and\n"
-        "# point at your fork (replace OWNER/REPO):\n"
-        "# !git clone https://github.com/OWNER/REPO.git\n"
-        "# %cd REPO\n"
+        COLAB_BOOTSTRAP +
         "\n"
         "# Device detection: use a GPU if Colab gave you one, else fall back to CPU.\n"
         "import torch\n"
@@ -929,9 +950,7 @@ def nb_m08_train():
         "iterations; more iterations means lower loss (down to a point)."
     ))
     nb.cells.append(new_code_cell(
-        "# If running on Colab, clone your fork first (replace OWNER/REPO):\n"
-        "# !git clone https://github.com/OWNER/REPO.git\n"
-        "# %cd REPO\n"
+        COLAB_BOOTSTRAP +
         "\n"
         "import torch\n"
         "device = 'cuda' if torch.cuda.is_available() else 'cpu'\n"
@@ -1009,9 +1028,7 @@ def nb_m09_capstone():
         "directly into the `learner_corpus` string."
     ))
     nb.cells.append(new_code_cell(
-        "# If running on Colab, clone your fork first (replace OWNER/REPO):\n"
-        "# !git clone https://github.com/OWNER/REPO.git\n"
-        "# %cd REPO\n"
+        COLAB_BOOTSTRAP +
         "\n"
         "import torch\n"
         "device = 'cuda' if torch.cuda.is_available() else 'cpu'\n"
