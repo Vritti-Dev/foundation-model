@@ -8,6 +8,7 @@
     <p class="auth-sub">Sign in to pick up where you left off.</p>
     {% if error %}<div class="auth-error">{{ error }}</div>{% endif %}
     <form action="/auth/login" method="post" class="auth-form" novalidate>
+      {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
       <label>
         <span>Email</span>
         <input type="email" name="email" autocomplete="email" required>
@@ -18,7 +19,7 @@
       </label>
       <button type="submit" class="btn-primary btn-block">Sign in</button>
     </form>
-    <p class="auth-foot">No account yet? <a href="/signup">Create one</a>.</p>
+    <p class="auth-foot">No account yet? <a href="/signup{% if next %}?next={{ next|urlencode }}{% endif %}">Create one</a>.</p>
   </div>
 </main>
 {% endblock %}

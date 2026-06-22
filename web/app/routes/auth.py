@@ -54,19 +54,30 @@ async def _read_credentials(
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="email and password required")
 
 
+def _safe_next(value: str | None) -> str:
+    """Validate a redirect target so we don't bounce users to an open redirect.
+    Only allow same-origin paths starting with a single forward slash."""
+    if not value:
+        return "/dashboard"
+    if not value.startswith("/") or value.startswith("//"):
+        return "/dashboard"
+    return value
+
+
 @router.post("/signup")
 async def signup(
     request: Request,
     name: str | None = Form(default=None),
     email: str | None = Form(default=None),
     password: str | None = Form(default=None),
+    next: str | None = Form(default=None),
     db: Session = Depends(get_db),
 ):
     creds = await _read_credentials(request, name, email, password)
     try:
         data = SignupIn(**creds)
     except Exception as exc:
-        return _form_or_json(request, error=str(exc), status_code=400, path="/signup")
+        return _form_or_json(request, error=str(exc), status_code=400, path="/signup", next=next)
 
     user = User(name=data.name.strip(), email=data.email.lower(), password_hash=hash_password(data.password))
     db.add(user)
@@ -74,10 +85,10 @@ async def signup(
         db.commit()
     except IntegrityError:
         db.rollback()
-        return _form_or_json(request, error="An account with that email already exists.", status_code=409, path="/signup")
+        return _form_or_json(request, error="An account with that email already exists.", status_code=409, path="/signup", next=next)
     db.refresh(user)
     token = create_session_token(user.id, user.email)
-    return _success_response(request, token, user)
+    return _success_response(request, token, user, next=next)
 
 
 @router.post("/login")
@@ -85,14 +96,15 @@ async def login(
     request: Request,
     email: str | None = Form(default=None),
     password: str | None = Form(default=None),
+    next: str | None = Form(default=None),
     db: Session = Depends(get_db),
 ):
     creds = await _read_credentials(request, None, email, password)
     user = db.query(User).filter(User.email == creds["email"].lower()).first()
     if not user or not verify_password(creds["password"], user.password_hash):
-        return _form_or_json(request, error="Invalid email or password.", status_code=401, path="/login")
+        return _form_or_json(request, error="Invalid email or password.", status_code=401, path="/login", next=next)
     token = create_session_token(user.id, user.email)
-    return _success_response(request, token, user)
+    return _success_response(request, token, user, next=next)
 
 
 @router.post("/logout")
@@ -105,18 +117,21 @@ async def logout(request: Request):
     return resp
 
 
-def _success_response(request: Request, token: str, user: User):
+def _success_response(request: Request, token: str, user: User, next: str | None = None):
+    target = _safe_next(next)
     if request.headers.get("accept", "").startswith("application/json"):
-        resp = JSONResponse({"ok": True, "user": UserOut.model_validate(user).model_dump(mode="json")})
+        resp = JSONResponse({"ok": True, "user": UserOut.model_validate(user).model_dump(mode="json"), "next": target})
     else:
-        resp = RedirectResponse(url="/dashboard", status_code=status.HTTP_303_SEE_OTHER)
+        resp = RedirectResponse(url=target, status_code=status.HTTP_303_SEE_OTHER)
     _set_session_cookie(resp, token)
     return resp
 
 
-def _form_or_json(request: Request, error: str, status_code: int, path: str):
+def _form_or_json(request: Request, error: str, status_code: int, path: str, next: str | None = None):
     if request.headers.get("accept", "").startswith("application/json"):
         return JSONResponse({"ok": False, "error": error}, status_code=status_code)
-    # Show the form again with the error message via query string.
-    from urllib.parse import quote
-    return RedirectResponse(url=f"{path}?error={quote(error)}", status_code=status.HTTP_303_SEE_OTHER)
+    from urllib.parse import quote, urlencode
+    qs = {"error": error}
+    if next:
+        qs["next"] = next
+    return RedirectResponse(url=f"{path}?{urlencode(qs)}", status_code=status.HTTP_303_SEE_OTHER)

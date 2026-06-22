@@ -8,6 +8,7 @@
     <p class="auth-sub">Save your progress across devices. No payment, ever.</p>
     {% if error %}<div class="auth-error">{{ error }}</div>{% endif %}
     <form action="/auth/signup" method="post" class="auth-form" novalidate>
+      {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
       <label>
         <span>Your name</span>
         <input type="text" name="name" autocomplete="name" required maxlength="100">
@@ -23,7 +24,7 @@
       </label>
       <button type="submit" class="btn-primary btn-block">Create my account</button>
     </form>
-    <p class="auth-foot">Already have one? <a href="/login">Sign in</a>.</p>
+    <p class="auth-foot">Already have one? <a href="/login{% if next %}?next={{ next|urlencode }}{% endif %}">Sign in</a>.</p>
   </div>
 </main>
 {% endblock %}

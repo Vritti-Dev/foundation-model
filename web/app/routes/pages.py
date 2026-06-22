@@ -83,6 +83,15 @@ def _flat_lessons() -> list[dict]:
 TOTAL_LESSONS = sum(len(p["lessons"]) for p in PHASES)
 
 
+def _gate(target: str, user: User | None) -> str:
+    """Return the lesson URL if the user is signed in; otherwise the signup URL
+    with ?next= so they bounce back after auth."""
+    if user is not None:
+        return target
+    from urllib.parse import quote
+    return f"/signup?next={quote(target, safe='')}"
+
+
 @router.get("/", response_class=HTMLResponse)
 def landing(
     request: Request,
@@ -96,8 +105,15 @@ def landing(
         completed = {r.lesson_id for r in rows}
     phases = []
     for p in PHASES:
-        phases.append({**p, "lessons": [{**l, "done": l["id"] in completed} for l in p["lessons"]]})
-    first_lesson_url = PHASES[0]["lessons"][0]["url"]
+        phases.append({
+            **p,
+            "lessons": [
+                {**l, "done": l["id"] in completed, "auth_url": _gate(l["url"], user)}
+                for l in p["lessons"]
+            ],
+        })
+    first_lesson_target = PHASES[0]["lessons"][0]["url"]
+    first_lesson_url = _gate(first_lesson_target, user)
     return templates.TemplateResponse(
         "landing.html",
         {
@@ -118,23 +134,43 @@ def learn_redirect():
     return RedirectResponse(url="/#curriculum", status_code=301)
 
 
+def _sanitize_next(value: str | None) -> str | None:
+    if not value:
+        return None
+    if not value.startswith("/") or value.startswith("//"):
+        return None
+    return value
+
+
 @router.get("/login", response_class=HTMLResponse)
-def login_page(request: Request, error: str | None = None, user: User | None = Depends(get_current_user_optional)):
+def login_page(
+    request: Request,
+    error: str | None = None,
+    next: str | None = None,
+    user: User | None = Depends(get_current_user_optional),
+):
+    nxt = _sanitize_next(next)
     if user is not None:
-        return RedirectResponse(url="/dashboard")
+        return RedirectResponse(url=nxt or "/dashboard")
     return templates.TemplateResponse(
         "login.html",
-        {"request": request, "error": error, "course_url": _settings.course_url},
+        {"request": request, "error": error, "next": nxt, "course_url": _settings.course_url},
     )
 
 
 @router.get("/signup", response_class=HTMLResponse)
-def signup_page(request: Request, error: str | None = None, user: User | None = Depends(get_current_user_optional)):
+def signup_page(
+    request: Request,
+    error: str | None = None,
+    next: str | None = None,
+    user: User | None = Depends(get_current_user_optional),
+):
+    nxt = _sanitize_next(next)
     if user is not None:
-        return RedirectResponse(url="/dashboard")
+        return RedirectResponse(url=nxt or "/dashboard")
     return templates.TemplateResponse(
         "signup.html",
-        {"request": request, "error": error, "course_url": _settings.course_url},
+        {"request": request, "error": error, "next": nxt, "course_url": _settings.course_url},
     )
 
 

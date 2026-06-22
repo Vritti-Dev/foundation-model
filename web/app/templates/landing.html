@@ -37,7 +37,7 @@
       <span><b>12</b> modules</span><span class="dot">·</span>
       <span><b>₹0</b> total cost</span><span class="dot">·</span>
       <span>Runs in your browser</span><span class="dot">·</span>
-      <span>No signup for lesson 1</span>
+      <span>Free account to start</span>
     </div>
   </div>
   <div class="hero-scroll-cue reveal" data-reveal="6">
@@ -175,7 +175,7 @@
         </div>
         <div class="phase-grid">
           {% for lesson in phase.lessons %}
-            <a class="lcard runtime-{{ lesson.runtime }} {% if lesson.done %}done{% endif %}" href="{{ lesson.url }}">
+            <a class="lcard runtime-{{ lesson.runtime }} {% if lesson.done %}done{% endif %}" href="{{ lesson.auth_url }}">
               <div class="lcard-top">
                 <span class="lcard-id">{{ lesson.id|upper }}</span>
                 <span class="lcard-runtime">
