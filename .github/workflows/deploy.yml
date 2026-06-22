@@ -45,12 +45,18 @@ jobs:
           # Jupyter Book + the JupyterLite embedding stack. requirements-lite.txt
           # pins the in-browser kernel deps (numpy, otter-grader) that the
           # JupyterLite build bundles into the served WASM environment.
-          pip install jupyter-book jupyterlite-sphinx jupyterlite-pyodide-kernel
+          # Pin jupyter-book to the 1.x (Sphinx) line. Bare `jupyter-book`
+          # now installs v2.x (mystmd/Node engine), which does NOT consume
+          # _config.yml / _toc.yml / jupyterlite-sphinx and breaks the build.
+          pip install "jupyter-book==1.0.4.post1" jupyterlite-sphinx jupyterlite-pyodide-kernel
           if [ -f requirements-lite.txt ]; then pip install -r requirements-lite.txt; fi
 
       - name: Build the book
         run: |
           jupyter-book build book/
+          # Normalize backslash separators in launcher URLs. No-op on Linux
+          # (only fires for Windows-built sites), but cheap and idempotent.
+          python book/fix_lite_paths.py
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
