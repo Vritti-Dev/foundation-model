@@ -29,7 +29,7 @@ class Settings(BaseSettings):
     cookie_secure: bool = False  # set True behind HTTPS
     cookie_samesite: str = "lax"
 
-    course_url: str = "/intro.html"  # link to the existing course landing
+    course_url: str = "/learn"  # the course-intro page (renders the 12-module map)
 
 
 @lru_cache(maxsize=1)

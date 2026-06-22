@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}The course. Vritti AI Labs{% endblock %}
+{% block body_class %}page-learn{% endblock %}
+{% block content %}
+
+<section class="learn-hero">
+  <div class="learn-hero-inner">
+    <div class="kicker">12 modules. From zero ML to a trained GPT.</div>
+    <h1 class="learn-title">
+      Build your own small language model.<br>
+      <span class="accent">One neuron at a time.</span>
+    </h1>
+    <p class="learn-sub">
+      Every layer of a modern language model, implemented by you from first
+      principles. The warm-up runs in your browser with no signup. The full
+      build ends with a GPT you trained yourself on text you chose, on a free
+      Colab GPU.
+    </p>
+
+    <div class="learn-cta">
+      <a class="btn-primary btn-lg" href="{{ first_lesson_url }}">Start with the warm-up</a>
+      {% if user %}
+        <a class="btn-secondary btn-lg" href="/dashboard">Your dashboard ({{ completed_count }}/{{ total_count }})</a>
+      {% else %}
+        <a class="btn-secondary btn-lg" href="/signup">Create an account to save progress</a>
+      {% endif %}
+    </div>
+
+    <div class="learn-meta">
+      <div class="meta-item"><span class="meta-num">12</span><span class="meta-lab">modules</span></div>
+      <div class="meta-item"><span class="meta-num">8</span><span class="meta-lab">run in your browser</span></div>
+      <div class="meta-item"><span class="meta-num">3</span><span class="meta-lab">on free Colab</span></div>
+      <div class="meta-item"><span class="meta-num">₹0</span><span class="meta-lab">total cost</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="learn-howitworks">
+  <div class="band-inner">
+    <div class="how-grid">
+      <div class="how-item">
+        <div class="how-num">1</div>
+        <h3>Read. Edit. Run.</h3>
+        <p>Each lesson is an explainer plus a live notebook. The browser modules boot a Python kernel right in the page (Pyodide + NumPy). No install.</p>
+      </div>
+      <div class="how-item">
+        <div class="how-num">2</div>
+        <h3>Make the grader print PASS.</h3>
+        <p>Every lesson has a checkpoint. A correct implementation prints PASS. A broken one prints FAIL with the failing property named. The grader does not lie.</p>
+      </div>
+      <div class="how-item">
+        <div class="how-num">3</div>
+        <h3>For Colab modules, paste a token.</h3>
+        <p>The PyTorch lessons open in Google Colab with one click. When training finishes, the notebook prints a single line. Paste it here. That records your progress.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="learn-phases">
+  <div class="band-inner">
+    <div class="eyebrow">The full curriculum</div>
+    <h2 class="band-title">Four phases. Twelve lessons. One model you built.</h2>
+
+    {% for phase in phases %}
+      <div class="phase">
+        <div class="phase-head">
+          <h3 class="phase-label">{{ phase.label }}</h3>
+          <p class="phase-blurb">{{ phase.blurb }}</p>
+        </div>
+        <div class="phase-grid">
+          {% for lesson in phase.lessons %}
+            <a class="lcard runtime-{{ lesson.runtime }} {% if lesson.done %}done{% endif %}" href="{{ lesson.url }}">
+              <div class="lcard-top">
+                <span class="lcard-id">{{ lesson.id|upper }}</span>
+                <span class="lcard-runtime">
+                  {% if lesson.runtime == 'browser' %}In browser
+                  {% elif lesson.runtime == 'colab' %}Free Colab
+                  {% else %}Reading
+                  {% endif %}
+                </span>
+              </div>
+              <div class="lcard-title">{{ lesson.title }}</div>
+              <div class="lcard-summary">{{ lesson.summary }}</div>
+              <div class="lcard-status">
+                {% if lesson.done %}
+                  <span class="badge badge-done">Completed</span>
+                {% else %}
+                  <span class="badge badge-todo">Open lesson →</span>
+                {% endif %}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="band band-cta">
+  <div class="band-inner cta-inner">
+    <h2 class="band-title">Begin with one neuron.</h2>
+    <p class="lede">
+      Everything is free. The warm-up needs no signup. Create an account when
+      you want progress to sync across devices and the Colab tokens to be
+      recorded.
+    </p>
+    <div class="hero-cta">
+      <a class="btn-primary btn-lg" href="{{ first_lesson_url }}">Start with the warm-up</a>
+      {% if not user %}
+        <a class="btn-secondary btn-lg" href="/signup">Create my account</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,94 +1,132 @@
 {% extends "base.html" %}
 {% block title %}Vritti AI Labs. Build the model. Don't just use one.{% endblock %}
 {% block body_class %}page-landing{% endblock %}
+{% block head %}
+<meta name="description" content="A free, ground-up course that teaches one million Indian students to build foundation AI models from scratch. Neuron by neuron. Line by line.">
+{% endblock %}
 {% block content %}
 
-<section class="hero">
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- ============== HERO ============== -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="grid-overlay"></div>
+  </div>
   <div class="hero-inner">
-    <div class="kicker">For India. For builders. For the next decade.</div>
+    <div class="kicker reveal" data-reveal="0">For India. For builders. For the next decade.</div>
     <h1 class="hero-title">
-      Build the model.<br>
-      <span class="accent">Don't just use one.</span>
+      <span class="line reveal" data-reveal="1">Build the model.</span>
+      <span class="line reveal" data-reveal="2"><span class="accent gradient-sweep">Don't just use one.</span></span>
     </h1>
-    <p class="hero-sub">
+    <p class="hero-sub reveal" data-reveal="3">
       A free, ground-up course that teaches one million Indian students to
       build foundation AI models from scratch. Neuron by neuron. Line by line.
       In your browser and on a free Colab GPU.
     </p>
-    <div class="hero-cta">
-      <a href="/signup" class="btn-primary btn-lg">Start free</a>
-      <a href="{{ course_url }}" class="btn-secondary btn-lg">See the curriculum</a>
+    <div class="hero-cta reveal" data-reveal="4">
+      <a href="{{ first_lesson_url }}" class="btn-primary btn-lg btn-glow">
+        <span>Start the warm-up</span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#curriculum" class="btn-secondary btn-lg" data-scroll-to="curriculum">See the 12 modules</a>
     </div>
-    <div class="hero-meta">
-      <span>12 modules</span><span class="dot">·</span>
-      <span>From zero to your own GPT</span><span class="dot">·</span>
-      <span>Runs on free tooling</span>
+    <div class="hero-meta reveal" data-reveal="5">
+      <span><b>12</b> modules</span><span class="dot">·</span>
+      <span><b>₹0</b> total cost</span><span class="dot">·</span>
+      <span>Runs in your browser</span><span class="dot">·</span>
+      <span>No signup for lesson 1</span>
+    </div>
+  </div>
+  <div class="hero-scroll-cue reveal" data-reveal="6">
+    <span>scroll</span>
+    <span class="cue-line"></span>
+  </div>
+</section>
+
+<!-- ============== DEMO STRIP ============== -->
+<section class="demo-strip" id="demo">
+  <div class="band-inner">
+    <div class="demo-grid">
+      <div class="demo-text reveal-on-scroll">
+        <div class="eyebrow">A real model. That you trained.</div>
+        <h2 class="demo-title">This text was written by a tiny GPT.</h2>
+        <p class="demo-sub">
+          Below: actual output from a 0.8M parameter character-level GPT, trained
+          in 3 minutes on a laptop CPU as part of Module 8. No cherry-picking.
+          The model is in <code>reference/demo/numpy_forward.py</code>. You will
+          build, train, and run a bigger version yourself by the end of the course.
+        </p>
+      </div>
+      <div class="demo-output reveal-on-scroll" id="demoOutput">
+<pre class="demo-pre" id="demoTyped"></pre>
+        <div class="demo-caption">model: 4L / 4H / 128d / block 64 · trained on Tiny Shakespeare (~1 MB)</div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ============== WHY NOW ============== -->
 <section class="band band-stark" id="why-now">
-  <div class="band-inner">
+  <div class="band-inner reveal-on-scroll">
     <div class="eyebrow">Why now</div>
-    <h2 class="band-title">The age of the open Internet is ending. The age of guarded AI has begun.</h2>
+    <h2 class="band-title">The age of the open Internet is ending.<br><span class="accent">The age of guarded AI has begun.</span></h2>
     <p class="lede">
       In 2025, the United States published the AI Diffusion Framework. It sorts
-      every country in the world into tiers, and decides who gets frontier
-      models and who does not. Recent restrictions have already cut access for
-      whole regions to capable models from American labs, including those that
-      power the products you and your friends use every day.
+      every country in the world into tiers and decides who gets frontier models
+      and who does not. Recent restrictions have already cut access for whole
+      regions to capable models from American labs, including those that power
+      the products you and your friends use every day.
     </p>
     <p class="lede">
-      India is not on the top tier. We were warned. And we are not the only
-      country reading the room. From this point forward, foundation AI is a
-      sovereign capability, not a global commodity.
+      India is not on the top tier. We were warned. From this point forward,
+      foundation AI is a sovereign capability, not a global commodity.
     </p>
   </div>
 </section>
 
-<section class="band band-contrast">
-  <div class="band-inner two-col">
-    <div class="col">
-      <div class="eyebrow">The Internet</div>
-      <h3>Open by design.</h3>
-      <p>
-        TCP/IP, HTML, HTTP, SMTP. The protocols that built the web were
-        published as drafts and adopted by everyone. Anyone could spin up a
-        server. Anyone could read what anyone else had written. No country
-        could meaningfully gate it.
-      </p>
-      <p>
-        That openness is why India produced Flipkart, Paytm, Razorpay, Zerodha,
-        and a million indie developers. We did not need permission. We built
-        on a public substrate.
-      </p>
-    </div>
-    <div class="col">
-      <div class="eyebrow">Foundation AI</div>
-      <h3>Guarded like a strategic asset.</h3>
-      <p>
-        A frontier foundation model costs hundreds of millions of dollars in
-        compute to train and is governed like nuclear technology. The weights
-        are not free. The training data is not public. Access is licensed,
-        rate-limited, and revocable.
-      </p>
-      <p>
-        AI is not the next Internet. It is the next national capability. The
-        Internet was infrastructure for connecting people. Foundation AI is
-        infrastructure for thinking. No country that depends on a foreign
-        provider for that is independent.
-      </p>
+<!-- ============== INTERNET vs AI ============== -->
+<section class="band band-contrast" id="contrast">
+  <div class="band-inner">
+    <div class="two-col">
+      <div class="col reveal-on-scroll">
+        <div class="eyebrow eyebrow-green">The Internet</div>
+        <h3>Open by design.</h3>
+        <p>TCP/IP, HTML, HTTP, SMTP. The protocols that built the Web were
+           published as drafts and adopted by everyone. Anyone could spin up a
+           server. No country could meaningfully gate it.</p>
+        <p>That openness is why India produced Flipkart, Razorpay, Zerodha, and
+           a million indie developers. We never needed permission. We built on
+           a public substrate.</p>
+      </div>
+      <div class="col reveal-on-scroll" data-delay="0.15">
+        <div class="eyebrow eyebrow-red">Foundation AI</div>
+        <h3>Guarded like a strategic asset.</h3>
+        <p>A frontier foundation model costs hundreds of millions of dollars in
+           compute to train and is governed like nuclear technology. The weights
+           are not free. The training data is not public. Access is licensed,
+           rate-limited, and revocable.</p>
+        <p>AI is not the next Internet. It is the next national capability. No
+           country that depends on a foreign provider for the substrate of
+           thinking is independent.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="band band-fork">
+<!-- ============== TWO PATHS ============== -->
+<section class="band band-fork" id="paths">
   <div class="band-inner">
-    <div class="eyebrow">A fork in the road</div>
-    <h2 class="band-title">Two paths for a young Indian engineer in 2026.</h2>
+    <div class="reveal-on-scroll">
+      <div class="eyebrow">A fork in the road</div>
+      <h2 class="band-title">Two paths for a young Indian engineer in 2026.</h2>
+    </div>
     <div class="fork">
-      <div class="card card-muted">
-        <div class="card-title">Path A. Get certified.</div>
+      <div class="card card-muted reveal-on-scroll">
+        <div class="card-tag">Path A</div>
+        <div class="card-title">Get certified.</div>
         <ul class="card-list">
           <li>Memorize a vendor's API and earn a badge.</li>
           <li>Pay for tokens in foreign currency.</li>
@@ -97,61 +135,148 @@
         </ul>
         <div class="card-footer">A career renting capability that someone else owns.</div>
       </div>
-      <div class="card card-accent">
-        <div class="card-title">Path B. Learn to build them.</div>
+      <div class="card card-accent reveal-on-scroll" data-delay="0.15">
+        <div class="card-tag card-tag-accent">Path B</div>
+        <div class="card-title">Learn to build them.</div>
         <ul class="card-list">
           <li>Implement a neuron. Derive a gradient. Watch loss fall.</li>
-          <li>Write attention with your own hands. Train a tiny GPT.</li>
+          <li>Write attention by hand. Train a tiny GPT.</li>
           <li>Understand every line. Modify any layer. Read every paper.</li>
-          <li>Be the person who ships the next India-trained model.</li>
+          <li>Ship the next India-trained model.</li>
         </ul>
         <div class="card-footer">A career building capability that India owns.</div>
       </div>
     </div>
-    <p class="closer">
-      Certifications make you employable in a vendor ecosystem. Construction
-      makes you sovereign in your own.
+    <p class="closer reveal-on-scroll">
+      Certifications make you employable in a vendor ecosystem.<br>
+      <span class="accent">Construction makes you sovereign in your own.</span>
     </p>
   </div>
 </section>
 
-<section class="band band-mission" id="mission">
+<!-- ============== CURRICULUM (the course inline) ============== -->
+<section class="band band-curriculum" id="curriculum">
   <div class="band-inner">
-    <div class="eyebrow">Our mission</div>
-    <h2 class="band-title">
-      Teach <span class="accent">one million Indian students</span> to build foundation models from scratch.
-    </h2>
-    <p class="lede">
-      Vritti AI Labs exists for one reason: to put the construction of
-      foundation AI inside the heads of a generation of Indian builders. Not
-      the API. The math. Not the wrapper. The weights. Not certification.
-      Construction.
-    </p>
-    <div class="mission-grid">
-      <div class="stat">
-        <div class="stat-num">12</div>
-        <div class="stat-label">modules from zero ML to a trained GPT</div>
+    <div class="reveal-on-scroll">
+      <div class="eyebrow">The full curriculum</div>
+      <h2 class="band-title">Four phases. <span class="accent">Twelve lessons.</span> One model you built.</h2>
+      <p class="lede">
+        Every layer of a modern language model, implemented by you from first
+        principles. Eight in your browser, three on free Colab, one short read
+        at the end.
+      </p>
+    </div>
+
+    {% for phase in phases %}
+      <div class="phase reveal-on-scroll">
+        <div class="phase-head">
+          <h3 class="phase-label">{{ phase.label }}</h3>
+          <p class="phase-blurb">{{ phase.blurb }}</p>
+        </div>
+        <div class="phase-grid">
+          {% for lesson in phase.lessons %}
+            <a class="lcard runtime-{{ lesson.runtime }} {% if lesson.done %}done{% endif %}" href="{{ lesson.url }}">
+              <div class="lcard-top">
+                <span class="lcard-id">{{ lesson.id|upper }}</span>
+                <span class="lcard-runtime">
+                  {% if lesson.runtime == 'browser' %}In browser
+                  {% elif lesson.runtime == 'colab' %}Free Colab
+                  {% else %}Reading
+                  {% endif %}
+                </span>
+              </div>
+              <div class="lcard-title">{{ lesson.title }}</div>
+              <div class="lcard-summary">{{ lesson.summary }}</div>
+              <div class="lcard-status">
+                {% if lesson.done %}
+                  <span class="badge badge-done">Completed</span>
+                {% else %}
+                  <span class="badge badge-todo">Open lesson →</span>
+                {% endif %}
+              </div>
+            </a>
+          {% endfor %}
+        </div>
       </div>
-      <div class="stat">
-        <div class="stat-num">1M</div>
-        <div class="stat-label">students we are here to teach</div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ============== HOW IT WORKS ============== -->
+<section class="band band-how" id="how">
+  <div class="band-inner">
+    <div class="reveal-on-scroll">
+      <div class="eyebrow">How a lesson works</div>
+      <h2 class="band-title">Read. Edit. Run. Get PASS.</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-item reveal-on-scroll">
+        <div class="how-num">1</div>
+        <h3>Live code in your browser.</h3>
+        <p>The browser modules boot a real Python kernel right in the page
+           (Pyodide plus NumPy). You edit, run, and inspect outputs without an
+           install. Works offline after the first load.</p>
       </div>
-      <div class="stat">
-        <div class="stat-num">₹0</div>
-        <div class="stat-label">cost. Free tooling, end to end</div>
+      <div class="how-item reveal-on-scroll" data-delay="0.1">
+        <div class="how-num">2</div>
+        <h3>Every lesson has a checkpoint.</h3>
+        <p>A grader checks the property that defines correctness for that
+           lesson. A correct implementation prints <b>PASS</b>. A broken one
+           prints <b>FAIL</b> with the failing property named. The grader does
+           not lie.</p>
       </div>
-      <div class="stat">
-        <div class="stat-num">∞</div>
-        <div class="stat-label">labs the next decade can spawn from this</div>
+      <div class="how-item reveal-on-scroll" data-delay="0.2">
+        <div class="how-num">3</div>
+        <h3>Colab modules paste back a token.</h3>
+        <p>The PyTorch lessons open in Google Colab with one click. When
+           training finishes, the notebook prints a one-line submission token.
+           Paste it here. That records your progress.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="band band-outcome">
+<!-- ============== MISSION (animated counters) ============== -->
+<section class="band band-mission" id="mission">
   <div class="band-inner">
+    <div class="reveal-on-scroll">
+      <div class="eyebrow">Our mission</div>
+      <h2 class="band-title">
+        Teach <span class="accent">one million Indian students</span> to build foundation models from scratch.
+      </h2>
+      <p class="lede">
+        Vritti AI Labs exists for one reason. Put the construction of
+        foundation AI inside the heads of a generation of Indian builders. Not
+        the API. The math. Not the wrapper. The weights. Not certification.
+        Construction.
+      </p>
+    </div>
+    <div class="mission-grid">
+      <div class="stat reveal-on-scroll">
+        <div class="stat-num counter" data-from="0" data-to="12" data-format="int">0</div>
+        <div class="stat-label">modules from zero ML to a trained GPT</div>
+      </div>
+      <div class="stat reveal-on-scroll" data-delay="0.1">
+        <div class="stat-num counter" data-from="0" data-to="1000000" data-format="compact">0</div>
+        <div class="stat-label">students we are here to teach</div>
+      </div>
+      <div class="stat reveal-on-scroll" data-delay="0.2">
+        <div class="stat-num">₹<span class="counter" data-from="0" data-to="0" data-format="int">0</span></div>
+        <div class="stat-label">cost. Free tooling, end to end</div>
+      </div>
+      <div class="stat reveal-on-scroll" data-delay="0.3">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">labs the next decade can spawn</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== OUTCOME ============== -->
+<section class="band band-outcome" id="outcome">
+  <div class="band-inner reveal-on-scroll">
     <div class="eyebrow">The outcome</div>
-    <h2 class="band-title">A thousand Indian AI labs, each with a foundation model as its flagship.</h2>
+    <h2 class="band-title">A thousand Indian AI labs.<br><span class="accent">Each with a foundation model as its flagship.</span></h2>
     <p class="lede">
       When one million people understand a transformer from first principles,
       the second-order effects are huge. Garage labs in Bengaluru, Pune,
@@ -168,24 +293,43 @@
   </div>
 </section>
 
-<section class="band band-cta">
-  <div class="band-inner cta-inner">
-    <h2 class="band-title">Begin with one neuron. End with a GPT you trained.</h2>
-    <p class="lede">
-      The whole course is open and free. The warm-up is in your browser, no
-      signup needed. Create an account to save your progress across devices
-      and pick up where you left off.
-    </p>
-    <div class="hero-cta">
-      <a href="/signup" class="btn-primary btn-lg">Create your account</a>
-      <a href="{{ course_url }}" class="btn-secondary btn-lg">Jump to the warm-up</a>
+<!-- ============== FINAL CTA ============== -->
+<section class="band band-cta" id="cta">
+  <div class="band-inner cta-inner reveal-on-scroll">
+    <div class="cta-card">
+      <h2 class="band-title">Begin with one neuron. End with a GPT you trained.</h2>
+      <p class="lede">
+        Everything is free. The warm-up needs no signup. Create an account when
+        you want progress to sync across devices and the Colab tokens to be
+        recorded.
+      </p>
+      <div class="hero-cta">
+        <a href="{{ first_lesson_url }}" class="btn-primary btn-lg btn-glow">
+          <span>Start the warm-up</span><span class="arrow">→</span>
+        </a>
+        {% if not user %}
+          <a href="/signup" class="btn-secondary btn-lg">Create my account</a>
+        {% else %}
+          <a href="/dashboard" class="btn-secondary btn-lg">My dashboard</a>
+        {% endif %}
+      </div>
+      <p class="muted small">
+        A note: nothing here is anti-American. It is pro-Indian. The best response
+        to a closing frontier is a domestic capability that does not need an
+        export license.
+      </p>
     </div>
-    <p class="muted small">
-      A note on this page: nothing here is anti-American. It is pro-Indian. The
-      best response to a closing frontier is a domestic capability that does
-      not need an export license.
-    </p>
   </div>
 </section>
+
+<!-- ============== GSAP ============== -->
+<script>
+  // Real generated text from the demo model in reference/demo/numpy_forward.py.
+  // Loaded into the typewriter on the demo strip.
+  window.__SLM_DEMO_TEXT__ = "First Citizen:\nIf I must not, I need not be barren of accusations;\nhe hath faults, with sureve to they\nhath for mishe oughath soft-consconscienced men can be\ncontent to say it was for his country sey relid us as yous and would yould relieve";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="/static/landing.js"></script>
 
 {% endblock %}

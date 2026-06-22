@@ -1,35 +1,47 @@
-/* Vritti AI Labs - manifesto + auth + dashboard styles. */
+/* Vritti AI Labs - landing + auth + dashboard styles. */
 
 :root {
-  --bg: #0a0d12;
-  --bg-2: #11151c;
+  --bg: #07090d;
+  --bg-2: #0e1218;
   --bg-3: #161b24;
-  --fg: #e9edf2;
+  --fg: #ecf0f5;
   --fg-2: #b7c0cb;
   --fg-3: #7a8493;
-  --line: rgba(255,255,255,0.08);
+  --line: rgba(255,255,255,0.07);
   --line-2: rgba(255,255,255,0.14);
   --saffron: #ff8c1a;
   --saffron-soft: #ffae5b;
+  --saffron-glow: #ffd29b;
   --indigo: #6d7cff;
   --green: #2dd4a8;
   --red: #ff6b6b;
-  --shadow: 0 14px 36px -16px rgba(0,0,0,0.55);
+  --shadow: 0 18px 48px -22px rgba(0,0,0,0.75);
   --radius: 14px;
   --radius-sm: 8px;
-  --maxw: 1180px;
+  --maxw: 1200px;
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
-  background: radial-gradient(ellipse 90% 80% at 50% -10%, rgba(255,140,26,0.10), transparent 60%), var(--bg);
+  background: var(--bg);
   color: var(--fg);
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   line-height: 1.55;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* ---------- Scroll progress bar ---------- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0;
+  height: 2px; width: 0%;
+  background: linear-gradient(90deg, var(--saffron), var(--saffron-glow));
+  z-index: 100;
+  box-shadow: 0 0 12px rgba(255,140,26,0.55);
+  transition: width 0.05s linear;
 }
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--saffron-soft); }
@@ -82,37 +94,130 @@ p { margin: 0 0 1rem; }
 .btn-block { width: 100%; padding: 12px 16px; }
 
 /* ---------- Hero ---------- */
-.hero { padding: 96px 28px 72px; }
-.hero-inner { max-width: var(--maxw); margin: 0 auto; text-align: center; }
+.hero {
+  position: relative;
+  padding: 130px 28px 140px;
+  overflow: hidden;
+  min-height: clamp(640px, 86vh, 940px);
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-bg {
+  position: absolute; inset: -10% -10% -10% -10%; z-index: 0;
+  pointer-events: none;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+}
+.orb-a {
+  width: 460px; height: 460px;
+  top: -100px; left: 8%;
+  background: radial-gradient(circle, rgba(255,140,26,0.45), transparent 70%);
+}
+.orb-b {
+  width: 520px; height: 520px;
+  bottom: -160px; right: 6%;
+  background: radial-gradient(circle, rgba(109,124,255,0.34), transparent 70%);
+}
+.grid-overlay {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 30%, transparent 80%);
+}
+.hero-inner { position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; text-align: center; }
 .kicker {
-  display: inline-block;
-  padding: 6px 12px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px;
   font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--saffron-soft);
   border: 1px solid rgba(255,140,26,0.35);
   border-radius: 999px;
   background: rgba(255,140,26,0.06);
-  margin-bottom: 22px;
+  margin-bottom: 28px;
+  font-weight: 600;
 }
 .hero-title {
-  font-size: clamp(40px, 6vw, 76px);
-  line-height: 1.02;
+  font-size: clamp(44px, 7vw, 92px);
+  line-height: 1.0;
   font-weight: 900;
-  letter-spacing: -0.03em;
-  margin: 0 0 22px;
+  letter-spacing: -0.035em;
+  margin: 0 0 26px;
 }
+.hero-title .line { display: block; }
 .accent {
-  background: linear-gradient(90deg, var(--saffron) 0%, var(--saffron-soft) 60%, #ffd29b 100%);
+  background: linear-gradient(90deg, var(--saffron) 0%, var(--saffron-soft) 35%, var(--saffron-glow) 60%, var(--saffron-soft) 80%, var(--saffron) 100%);
+  background-size: 200% 100%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
+.gradient-sweep { background-size: 200% 100%; }
 .hero-sub {
-  font-size: clamp(16px, 1.5vw, 19px);
+  font-size: clamp(16px, 1.55vw, 20px);
   color: var(--fg-2);
-  max-width: 720px; margin: 0 auto 30px;
+  max-width: 760px; margin: 0 auto 34px;
+  line-height: 1.6;
 }
-.hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
-.hero-meta { color: var(--fg-3); font-size: 13px; display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-.dot { color: var(--fg-3); opacity: 0.6; }
+.hero-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+.hero-meta {
+  color: var(--fg-3); font-size: 13px;
+  display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+  align-items: center;
+}
+.hero-meta b { color: var(--fg); font-weight: 700; }
+.dot { color: var(--fg-3); opacity: 0.5; }
+
+.hero-scroll-cue {
+  position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+  font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--fg-3);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  z-index: 1;
+}
+.cue-line {
+  width: 1px; height: 32px;
+  background: linear-gradient(to bottom, var(--fg-3), transparent);
+  animation: cueDrop 2.4s ease-in-out infinite;
+}
+@keyframes cueDrop {
+  0%, 100% { transform: scaleY(0.4); transform-origin: top; }
+  50%      { transform: scaleY(1); transform-origin: top; }
+}
+
+/* Reveal items: always visible in CSS. GSAP adds a polish entry on top. */
+.reveal { opacity: 1; }
+
+/* Glow button */
+.btn-glow {
+  position: relative;
+  overflow: hidden;
+}
+.btn-glow::after {
+  content: "";
+  position: absolute; inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%);
+  background-size: 200% 100%;
+  background-position: 200% 0;
+  animation: shineSweep 3.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shineSweep {
+  0%, 35% { background-position: 200% 0; }
+  60%, 100% { background-position: -200% 0; }
+}
+.btn-glow .arrow { transition: transform 0.2s ease; display: inline-block; margin-left: 6px; }
+.btn-glow:hover .arrow { transform: translateX(3px); }
+
+/* Nav scrolled state */
+.nav.scrolled {
+  border-bottom-color: var(--line-2);
+  background: rgba(7,9,13,0.88);
+}
 
 /* ---------- Bands ---------- */
 .band { padding: 80px 28px; border-top: 1px solid var(--line); }
@@ -259,3 +364,281 @@ p { margin: 0 0 1rem; }
 .lesson-card.done { border-color: rgba(45,212,168,0.25); }
 
 .dash-foot { margin-top: 36px; }
+
+/* ============================================================
+   Course-intro page (/learn)
+   ============================================================ */
+.page-learn { background: var(--bg); }
+
+.learn-hero {
+  padding: 80px 28px 60px;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% -10%, rgba(255,140,26,0.10), transparent 65%),
+    var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.learn-hero-inner { max-width: var(--maxw); margin: 0 auto; text-align: center; }
+.learn-title {
+  font-size: clamp(32px, 4.5vw, 56px);
+  line-height: 1.07;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  margin: 18px 0 18px;
+}
+.learn-sub {
+  font-size: clamp(15px, 1.3vw, 18px);
+  color: var(--fg-2);
+  max-width: 720px; margin: 0 auto 28px;
+}
+.learn-cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 26px; }
+
+.learn-meta {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+@media (max-width: 720px) { .learn-meta { grid-template-columns: repeat(2, 1fr); } }
+.meta-item {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px 10px;
+  display: flex; flex-direction: column; gap: 4px; align-items: center;
+}
+.meta-num { font-size: 26px; font-weight: 900; color: var(--saffron); line-height: 1; letter-spacing: -0.02em; }
+.meta-lab { font-size: 11px; color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.08em; text-align: center; }
+
+.learn-howitworks {
+  padding: 60px 28px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--line);
+}
+.how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+@media (max-width: 900px) { .how-grid { grid-template-columns: 1fr; } }
+.how-item {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.how-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(255,140,26,0.12);
+  border: 1px solid rgba(255,140,26,0.45);
+  color: var(--saffron); font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.how-item h3 { margin: 0 0 8px; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+.how-item p { color: var(--fg-2); font-size: 14px; margin: 0; }
+
+.learn-phases { padding: 76px 28px; }
+.phase { margin-top: 38px; }
+.phase-head { margin-bottom: 14px; }
+.phase-label {
+  font-size: 18px; font-weight: 700; margin: 0 0 4px;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.phase-blurb { color: var(--fg-3); margin: 0; font-size: 14px; }
+
+.phase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+.lcard {
+  display: flex; flex-direction: column; gap: 8px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  color: var(--fg);
+  transition: transform .08s ease, border-color .15s ease, background .15s ease;
+}
+.lcard:hover { transform: translateY(-1px); background: #181e29; border-color: var(--line-2); color: var(--fg); }
+.lcard-top { display: flex; justify-content: space-between; align-items: center; }
+.lcard-id { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; color: var(--fg-3); letter-spacing: 0.08em; }
+.lcard-runtime {
+  font-size: 10.5px; padding: 2px 8px; border-radius: 999px;
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600;
+}
+.runtime-browser .lcard-runtime { background: rgba(45,212,168,0.10); color: var(--green); border: 1px solid rgba(45,212,168,0.35); }
+.runtime-colab .lcard-runtime   { background: rgba(255,140,26,0.10); color: var(--saffron-soft); border: 1px solid rgba(255,140,26,0.40); }
+.runtime-reading .lcard-runtime { background: rgba(255,255,255,0.04); color: var(--fg-3); border: 1px solid var(--line); }
+.lcard-title { font-weight: 700; font-size: 16px; margin-top: 4px; letter-spacing: -0.01em; }
+.lcard-summary { color: var(--fg-2); font-size: 13.5px; line-height: 1.5; }
+.lcard-status { margin-top: 2px; }
+.lcard.done { border-color: rgba(45,212,168,0.30); background: linear-gradient(180deg, rgba(45,212,168,0.04), var(--bg-2)); }
+
+/* ============================================================
+   New unified landing extras: demo strip, contrast eyebrows,
+   curriculum on the landing, how-it-works, CTA card
+   ============================================================ */
+
+.eyebrow-green { color: var(--green); }
+.eyebrow-red   { color: var(--red); }
+
+/* ---------- Demo strip (live-typed model output) ---------- */
+.demo-strip {
+  padding: 80px 28px;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.demo-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 48px;
+  align-items: center;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+@media (max-width: 900px) { .demo-grid { grid-template-columns: 1fr; gap: 28px; } }
+.demo-title {
+  font-size: clamp(26px, 3.2vw, 38px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 8px 0 14px;
+  line-height: 1.15;
+}
+.demo-sub { color: var(--fg-2); font-size: 15px; line-height: 1.65; }
+.demo-sub code {
+  background: var(--bg-3);
+  padding: 1px 6px; border-radius: 4px;
+  font-size: 13px;
+  border: 1px solid var(--line);
+}
+.demo-output {
+  background: #07090d;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,140,26,0.06);
+  position: relative;
+}
+.demo-output::before {
+  content: "";
+  position: absolute; left: 12px; top: 12px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--saffron);
+  box-shadow: 0 0 12px rgba(255,140,26,0.6);
+  animation: blink 1.4s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:0.4} 50%{opacity:1} }
+.demo-pre {
+  margin: 0;
+  padding: 10px 0 0;
+  font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #e3eadc;
+  white-space: pre-wrap;
+  min-height: 180px;
+}
+.demo-caption {
+  margin-top: 14px;
+  font-size: 11.5px; color: var(--fg-3);
+  letter-spacing: 0.04em;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+
+/* ---------- Curriculum on landing ---------- */
+.band-curriculum {
+  background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%);
+}
+.band-curriculum .phase { margin-top: 44px; }
+.band-curriculum .phase-head { margin-bottom: 14px; }
+.band-curriculum .phase-label {
+  font-size: 18px; font-weight: 700; margin: 0 0 4px;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+.band-curriculum .phase-blurb { color: var(--fg-3); margin: 0; font-size: 14px; }
+
+/* ---------- How it works ---------- */
+.band-how {
+  background: var(--bg-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.band-how .how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 36px;
+}
+@media (max-width: 900px) { .band-how .how-grid { grid-template-columns: 1fr; } }
+.band-how .how-item {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 26px;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.band-how .how-item:hover { border-color: var(--line-2); transform: translateY(-2px); }
+.band-how .how-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: rgba(255,140,26,0.12);
+  border: 1px solid rgba(255,140,26,0.45);
+  color: var(--saffron); font-weight: 800;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+.band-how .how-item h3 { margin: 0 0 8px; font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+.band-how .how-item p { color: var(--fg-2); font-size: 14.5px; margin: 0; line-height: 1.6; }
+
+/* ---------- Fork: tag chips ---------- */
+.card-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  color: var(--fg-3);
+  border: 1px solid var(--line);
+  margin-bottom: 14px;
+}
+.card-tag-accent {
+  background: rgba(255,140,26,0.10);
+  color: var(--saffron-soft);
+  border-color: rgba(255,140,26,0.45);
+}
+
+/* ---------- Final CTA card ---------- */
+.cta-card {
+  background: linear-gradient(180deg, rgba(255,140,26,0.10) 0%, var(--bg-2) 100%);
+  border: 1px solid rgba(255,140,26,0.30);
+  border-radius: 22px;
+  padding: 56px 48px;
+  text-align: center;
+  box-shadow: 0 30px 80px -28px rgba(255,140,26,0.25), var(--shadow);
+}
+.cta-card .band-title { margin-bottom: 16px; }
+.cta-card .lede { margin-left: auto; margin-right: auto; }
+
+/* ---------- Lesson card 3D (GSAP tilts it) ---------- */
+.lcard { transform-style: preserve-3d; will-change: transform; }
+
+/* ---------- Two-col contrast eyebrow spacing ---------- */
+.two-col .col .eyebrow { margin-bottom: 12px; }
+
+/* Reveal-on-scroll: visible by default. GSAP can soft-fade them on first view. */
+.reveal-on-scroll { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-on-scroll { opacity: 1 !important; transform: none !important; }
+}
+
