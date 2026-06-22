@@ -1,21 +1,28 @@
-# Build the Jupyter Book + the static landing page and deploy them as one
-# site to GitHub Pages.
+# Build the Jupyter Book (with embedded JupyterLite/Pyodide notebooks) and
+# deploy the static site to GitHub Pages.
 #
-# IMPORTANT: enable Pages in the repo settings before pushing:
+# IMPORTANT — this workflow does nothing until the repository is pushed to
+# GitHub AND Pages is enabled in the repo settings:
 #   Settings -> Pages -> "Build and deployment" -> Source: "GitHub Actions".
-# Without that, the deploy step has no Pages site to publish to.
-name: Deploy site to GitHub Pages
+# Without that, the deploy-pages step has no Pages site to publish to. The
+# build job will still run, but the deploy job will fail until Pages is on.
+name: Deploy book to GitHub Pages
 
 on:
+  # Auto-deploy on every push to main.
   push:
     branches: [main]
+  # Allow a manual run from the Actions tab.
   workflow_dispatch:
 
+# GitHub Pages deployment via OIDC needs these token permissions.
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Only one Pages deployment at a time; let an in-progress run finish rather
+# than cancelling it (cancelling a deploy mid-flight can leave Pages wedged).
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -35,29 +42,31 @@ jobs:
       - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
-          # Jupyter Book 1.x (pinned: bare `jupyter-book` now installs v2 which
-          # is a different engine and ignores _config.yml).
+          # Jupyter Book + the JupyterLite embedding stack. requirements-lite.txt
+          # pins the in-browser kernel deps (numpy, otter-grader) that the
+          # JupyterLite build bundles into the served WASM environment.
+          # Pin jupyter-book to the 1.x (Sphinx) line. Bare `jupyter-book`
+          # now installs v2.x (mystmd/Node engine), which does NOT consume
+          # _config.yml / _toc.yml / jupyterlite-sphinx and breaks the build.
           pip install "jupyter-book==1.0.4.post1" jupyterlite-sphinx jupyterlite-pyodide-kernel
-          # Templating for the static landing build.
-          pip install "jinja2>=3.1" "pydantic>=2.9" "pydantic-settings>=2.5"
           if [ -f requirements-lite.txt ]; then pip install -r requirements-lite.txt; fi
 
-      - name: Build the Jupyter Book
+      - name: Build the book
         run: |
           jupyter-book build book/
-          # Normalize backslash separators (no-op on Linux, defensive).
+          # Normalize backslash separators in launcher URLs. No-op on Linux
+          # (only fires for Windows-built sites), but cheap and idempotent.
           python book/fix_lite_paths.py
-          # Wire the in-browser kernel extension into the lite/ deployment.
+          # Wire the pyodide-kernel labextension into the lite build. The
+          # jupyter-lite addon does not always discover it from the share/
+          # path. Idempotent.
           python book/wire_pyodide_kernel.py
-
-      - name: Build the static landing + assemble dist/
-        run: |
-          python scripts/build_static.py
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          # Jupyter Book emits the rendered site here.
+          path: book/_build/html
 
   deploy:
     needs: build

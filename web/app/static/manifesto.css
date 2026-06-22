@@ -852,22 +852,3 @@ p { margin: 0 0 1rem; }
   .btn-glow::after { animation: none; opacity: 0; }
 }
 
-/* ============================================================
-   Static-mode banner (shown only on the GitHub Pages preview)
-   ============================================================ */
-.static-banner {
-  background: linear-gradient(90deg, rgba(255,140,26,0.14), rgba(255,140,26,0.06));
-  border-bottom: 1px solid rgba(255,140,26,0.30);
-  color: var(--fg-2);
-  font-size: 13px;
-  padding: 9px 18px;
-  text-align: center;
-  position: sticky;
-  top: 56px;
-  z-index: 40;
-}
-.static-banner a { color: var(--saffron-soft); }
-@media (max-width: 640px) {
-  .static-banner { font-size: 12px; padding: 8px 12px; top: 50px; }
-}
-

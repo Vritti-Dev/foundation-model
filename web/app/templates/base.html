@@ -20,10 +20,7 @@
       <a href="/#mission">Mission</a>
       <a href="/#why-now">Why now</a>
       <a href="{{ course_url|default('/intro.html') }}">Course</a>
-      {% if static_mode %}
-        <a href="https://github.com/Vritti-Dev/foundation-model" class="btn-ghost">GitHub</a>
-        <a href="{{ first_lesson_url|default('/course/lessons/s1_tokenizer_warmup.html') }}" class="btn-primary">Start free</a>
-      {% elif user %}
+      {% if user %}
         <a href="/dashboard" class="btn-ghost">{{ user.name.split(' ')[0] }}</a>
         <form action="/auth/logout" method="post" class="inline">
           <button type="submit" class="btn-ghost">Sign out</button>
