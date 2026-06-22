@@ -5,3 +5,6 @@ _build/
 node_modules/
 .venv/
 *.pt
+book/.cache/
+book/_output/
+book/.jupyterlite.doit.db

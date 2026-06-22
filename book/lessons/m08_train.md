@@ -10,7 +10,7 @@ When training finishes, the final cell prints your **submission token** (a line 
 
 ```{admonition} Open this lesson in Colab
 :class: tip
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/your-org/foundation-model/blob/main/notebooks/m08_train.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Vritti-Dev/foundation-model/blob/main/notebooks/m08_train.ipynb)
 
 The button opens `notebooks/m08_train.ipynb` in Google Colab. For the fastest run, enable a GPU first: **Runtime > Change runtime type > T4 GPU**.
 ```

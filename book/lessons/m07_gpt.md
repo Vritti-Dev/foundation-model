@@ -10,7 +10,7 @@ In this module you confirm the model is wired correctly: the forward pass produc
 
 ```{admonition} Open this lesson in Colab
 :class: tip
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/your-org/foundation-model/blob/main/notebooks/m07_gpt.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Vritti-Dev/foundation-model/blob/main/notebooks/m07_gpt.ipynb)
 
 The button opens `notebooks/m07_gpt.ipynb` in Google Colab. Run all cells, then copy the `SLM-m7 ...` line from the last cell back into the grader.
 ```

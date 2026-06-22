@@ -29,7 +29,7 @@ launch_buttons:
   colab_url: "https://colab.research.google.com"
 
 repository:
-  url: https://github.com/your-org/foundation-model
+  url: https://github.com/Vritti-Dev/foundation-model
   path_to_book: book
   branch: main
 

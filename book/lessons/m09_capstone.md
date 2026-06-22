@@ -10,7 +10,7 @@ As with Modules 7 and 8, the final cell prints a **submission token** to paste i
 
 ```{admonition} Open this lesson in Colab
 :class: tip
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/your-org/foundation-model/blob/main/notebooks/m09_capstone.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Vritti-Dev/foundation-model/blob/main/notebooks/m09_capstone.ipynb)
 
 The button opens `notebooks/m09_capstone.ipynb` in Google Colab. Swap in your own corpus where the notebook marks it, then run all cells.
 ```
