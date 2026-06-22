@@ -40,7 +40,8 @@ jobs:
           pip install "jupyter-book==1.0.4.post1" jupyterlite-sphinx jupyterlite-pyodide-kernel
           # Templating for the static landing build.
           pip install "jinja2>=3.1" "pydantic>=2.9" "pydantic-settings>=2.5"
-          if [ -f requirements-lite.txt ]; then pip install -r requirements-lite.txt; fi
+          # requirements-lite.txt is for in-browser piplite at notebook runtime,
+          # not for the build env; do NOT install it here.
 
       - name: Build the Jupyter Book
         run: |
