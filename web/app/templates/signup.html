@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Create your account. Vritti AI Labs{% endblock %}
+{% block body_class %}page-auth{% endblock %}
+{% block content %}
+<main class="auth-shell">
+  <div class="auth-card">
+    <h1 class="auth-title">Start free</h1>
+    <p class="auth-sub">Save your progress across devices. No payment, ever.</p>
+    {% if error %}<div class="auth-error">{{ error }}</div>{% endif %}
+    <form action="/auth/signup" method="post" class="auth-form" novalidate>
+      <label>
+        <span>Your name</span>
+        <input type="text" name="name" autocomplete="name" required maxlength="100">
+      </label>
+      <label>
+        <span>Email</span>
+        <input type="email" name="email" autocomplete="email" required>
+      </label>
+      <label>
+        <span>Password</span>
+        <input type="password" name="password" autocomplete="new-password" required minlength="8">
+        <span class="hint">At least 8 characters.</span>
+      </label>
+      <button type="submit" class="btn-primary btn-block">Create my account</button>
+    </form>
+    <p class="auth-foot">Already have one? <a href="/login">Sign in</a>.</p>
+  </div>
+</main>
+{% endblock %}

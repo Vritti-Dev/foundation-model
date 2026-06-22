@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}Vritti AI Labs{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/manifesto.css">
+  {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  <header class="nav">
+    <a class="brand" href="/">
+      <span class="brand-mark">▲</span>
+      <span class="brand-name">Vritti AI Labs</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/#mission">Mission</a>
+      <a href="/#why-now">Why now</a>
+      <a href="{{ course_url|default('/intro.html') }}">Course</a>
+      {% if user %}
+        <a href="/dashboard" class="btn-ghost">{{ user.name.split(' ')[0] }}</a>
+        <form action="/auth/logout" method="post" class="inline">
+          <button type="submit" class="btn-ghost">Sign out</button>
+        </form>
+      {% else %}
+        <a href="/login" class="btn-ghost">Sign in</a>
+        <a href="/signup" class="btn-primary">Start free</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand-name">Vritti AI Labs</div>
+        <div class="muted">Teach a million students to build foundation models from scratch.</div>
+      </div>
+      <div class="footer-links">
+        <a href="{{ course_url|default('/intro.html') }}">The course</a>
+        <a href="https://github.com/Vritti-Dev/foundation-model">Source on GitHub</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

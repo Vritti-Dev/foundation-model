@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block title %}Vritti AI Labs. Build the model. Don't just use one.{% endblock %}
+{% block body_class %}page-landing{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kicker">For India. For builders. For the next decade.</div>
+    <h1 class="hero-title">
+      Build the model.<br>
+      <span class="accent">Don't just use one.</span>
+    </h1>
+    <p class="hero-sub">
+      A free, ground-up course that teaches one million Indian students to
+      build foundation AI models from scratch. Neuron by neuron. Line by line.
+      In your browser and on a free Colab GPU.
+    </p>
+    <div class="hero-cta">
+      <a href="/signup" class="btn-primary btn-lg">Start free</a>
+      <a href="{{ course_url }}" class="btn-secondary btn-lg">See the curriculum</a>
+    </div>
+    <div class="hero-meta">
+      <span>12 modules</span><span class="dot">·</span>
+      <span>From zero to your own GPT</span><span class="dot">·</span>
+      <span>Runs on free tooling</span>
+    </div>
+  </div>
+</section>
+
+<section class="band band-stark" id="why-now">
+  <div class="band-inner">
+    <div class="eyebrow">Why now</div>
+    <h2 class="band-title">The age of the open Internet is ending. The age of guarded AI has begun.</h2>
+    <p class="lede">
+      In 2025, the United States published the AI Diffusion Framework. It sorts
+      every country in the world into tiers, and decides who gets frontier
+      models and who does not. Recent restrictions have already cut access for
+      whole regions to capable models from American labs, including those that
+      power the products you and your friends use every day.
+    </p>
+    <p class="lede">
+      India is not on the top tier. We were warned. And we are not the only
+      country reading the room. From this point forward, foundation AI is a
+      sovereign capability, not a global commodity.
+    </p>
+  </div>
+</section>
+
+<section class="band band-contrast">
+  <div class="band-inner two-col">
+    <div class="col">
+      <div class="eyebrow">The Internet</div>
+      <h3>Open by design.</h3>
+      <p>
+        TCP/IP, HTML, HTTP, SMTP. The protocols that built the web were
+        published as drafts and adopted by everyone. Anyone could spin up a
+        server. Anyone could read what anyone else had written. No country
+        could meaningfully gate it.
+      </p>
+      <p>
+        That openness is why India produced Flipkart, Paytm, Razorpay, Zerodha,
+        and a million indie developers. We did not need permission. We built
+        on a public substrate.
+      </p>
+    </div>
+    <div class="col">
+      <div class="eyebrow">Foundation AI</div>
+      <h3>Guarded like a strategic asset.</h3>
+      <p>
+        A frontier foundation model costs hundreds of millions of dollars in
+        compute to train and is governed like nuclear technology. The weights
+        are not free. The training data is not public. Access is licensed,
+        rate-limited, and revocable.
+      </p>
+      <p>
+        AI is not the next Internet. It is the next national capability. The
+        Internet was infrastructure for connecting people. Foundation AI is
+        infrastructure for thinking. No country that depends on a foreign
+        provider for that is independent.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="band band-fork">
+  <div class="band-inner">
+    <div class="eyebrow">A fork in the road</div>
+    <h2 class="band-title">Two paths for a young Indian engineer in 2026.</h2>
+    <div class="fork">
+      <div class="card card-muted">
+        <div class="card-title">Path A. Get certified.</div>
+        <ul class="card-list">
+          <li>Memorize a vendor's API and earn a badge.</li>
+          <li>Pay for tokens in foreign currency.</li>
+          <li>Wait for quota. Hope the policy winds stay favourable.</li>
+          <li>Build a wrapper. Watch a model update break it overnight.</li>
+        </ul>
+        <div class="card-footer">A career renting capability that someone else owns.</div>
+      </div>
+      <div class="card card-accent">
+        <div class="card-title">Path B. Learn to build them.</div>
+        <ul class="card-list">
+          <li>Implement a neuron. Derive a gradient. Watch loss fall.</li>
+          <li>Write attention with your own hands. Train a tiny GPT.</li>
+          <li>Understand every line. Modify any layer. Read every paper.</li>
+          <li>Be the person who ships the next India-trained model.</li>
+        </ul>
+        <div class="card-footer">A career building capability that India owns.</div>
+      </div>
+    </div>
+    <p class="closer">
+      Certifications make you employable in a vendor ecosystem. Construction
+      makes you sovereign in your own.
+    </p>
+  </div>
+</section>
+
+<section class="band band-mission" id="mission">
+  <div class="band-inner">
+    <div class="eyebrow">Our mission</div>
+    <h2 class="band-title">
+      Teach <span class="accent">one million Indian students</span> to build foundation models from scratch.
+    </h2>
+    <p class="lede">
+      Vritti AI Labs exists for one reason: to put the construction of
+      foundation AI inside the heads of a generation of Indian builders. Not
+      the API. The math. Not the wrapper. The weights. Not certification.
+      Construction.
+    </p>
+    <div class="mission-grid">
+      <div class="stat">
+        <div class="stat-num">12</div>
+        <div class="stat-label">modules from zero ML to a trained GPT</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1M</div>
+        <div class="stat-label">students we are here to teach</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">₹0</div>
+        <div class="stat-label">cost. Free tooling, end to end</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">labs the next decade can spawn from this</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band-outcome">
+  <div class="band-inner">
+    <div class="eyebrow">The outcome</div>
+    <h2 class="band-title">A thousand Indian AI labs, each with a foundation model as its flagship.</h2>
+    <p class="lede">
+      When one million people understand a transformer from first principles,
+      the second-order effects are huge. Garage labs in Bengaluru, Pune,
+      Hyderabad, Chennai, Indore, Kochi, Jaipur, and a hundred Tier-2 cities
+      start pretraining their own small models for Indian languages, Indian
+      legal corpora, Indian medical text, Indian code styles, and use cases
+      nobody at a frontier American lab has heard of.
+    </p>
+    <p class="lede">
+      Sovereign AI is not a policy decision waiting on a committee. It is a
+      generation of builders who never needed permission. That generation
+      starts in your browser, on a free notebook, with a single neuron.
+    </p>
+  </div>
+</section>
+
+<section class="band band-cta">
+  <div class="band-inner cta-inner">
+    <h2 class="band-title">Begin with one neuron. End with a GPT you trained.</h2>
+    <p class="lede">
+      The whole course is open and free. The warm-up is in your browser, no
+      signup needed. Create an account to save your progress across devices
+      and pick up where you left off.
+    </p>
+    <div class="hero-cta">
+      <a href="/signup" class="btn-primary btn-lg">Create your account</a>
+      <a href="{{ course_url }}" class="btn-secondary btn-lg">Jump to the warm-up</a>
+    </div>
+    <p class="muted small">
+      A note on this page: nothing here is anti-American. It is pro-Indian. The
+      best response to a closing frontier is a domestic capability that does
+      not need an export license.
+    </p>
+  </div>
+</section>
+
+{% endblock %}

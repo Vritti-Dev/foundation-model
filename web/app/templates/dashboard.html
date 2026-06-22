@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Dashboard. Vritti AI Labs{% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
+{% block content %}
+<main class="dash-shell">
+  <header class="dash-head">
+    <div>
+      <div class="eyebrow">Your workshop</div>
+      <h1 class="dash-title">Hello, {{ user.name.split(' ')[0] }}.</h1>
+      <p class="dash-sub">
+        You are {{ completed_count }} of {{ total_count }} modules in. Pick up where you left off.
+      </p>
+    </div>
+    <div class="dash-progress">
+      <div class="ring">
+        <div class="ring-num">{{ completed_count }}<span class="of">/{{ total_count }}</span></div>
+        <div class="ring-label">modules complete</div>
+      </div>
+    </div>
+  </header>
+
+  <section class="dash-grid">
+    {% for lesson in lessons %}
+      <a class="lesson-card {% if lesson.done %}done{% endif %}" href="{{ lesson.url }}">
+        <div class="lesson-id">{{ lesson.id|upper }}</div>
+        <div class="lesson-title">{{ lesson.title }}</div>
+        <div class="lesson-status">
+          {% if lesson.done %}
+            <span class="badge badge-done">Completed</span>
+          {% else %}
+            <span class="badge badge-todo">Open</span>
+          {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  </section>
+
+  <section class="dash-foot">
+    <p class="muted">
+      Progress is synced to your account. You can sign in on a different device
+      and pick up the same place. Your account also stores the submission
+      tokens you paste from the Colab modules.
+    </p>
+  </section>
+</main>
+{% endblock %}

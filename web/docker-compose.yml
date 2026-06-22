@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: vritti-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: vritti
+      POSTGRES_PASSWORD: vritti
+      POSTGRES_DB: vritti
+    ports:
+      - "5432:5432"
+    volumes:
+      - vritti_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vritti -d vritti"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  vritti_pgdata: {}
