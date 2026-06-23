@@ -69,12 +69,18 @@ p { margin: 0 0 1rem; }
 }
 .brand-logo {
   display: block;
-  /* Source is 340x156 (~2.18:1). Render at half-height by default. */
-  height: 36px;
+  /* Source is 340x156 (~2.18:1). The artwork is designed for a light
+     background (blue wordmark + small gray "Creating Waves" tagline),
+     so we give it its native canvas via a white badge. Padding fills
+     the transparent edges of the PNG and keeps the wordmark from
+     touching the badge edge. */
+  height: 40px;
   width: auto;
-  /* The logo is a single-color blue mark. A soft drop-shadow keeps it
-     legible against any background it ever lands on. */
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
+  background: #fff;
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.06) inset,
+              0 4px 14px -6px rgba(0,0,0,0.55);
 }
 /* Legacy text/mark spans — kept hidden in case any cached template still
    uses them. Safe no-op when they're absent. */
@@ -743,7 +749,7 @@ p { margin: 0 0 1rem; }
   .nav-links { gap: 6px; flex-shrink: 0; }
   .nav-links .btn-primary { padding: 7px 12px; font-size: 12.5px; white-space: nowrap; }
   .brand { min-width: 0; }
-  .brand-logo { height: 28px; }
+  .brand-logo { height: 30px; padding: 3px 8px; border-radius: 6px; }
 
   html, body { overflow-x: hidden; max-width: 100vw; width: 100%; }
   .nav { width: 100%; box-sizing: border-box; overflow: hidden; }
